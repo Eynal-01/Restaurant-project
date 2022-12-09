@@ -1,9 +1,10 @@
 #pragma once
 #include<iostream>
 #include"Entities.h"
+#include"Client.h"
 using namespace std;
 
-void GuestPanel(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification&, Table1& t);
+//void GuestPanel(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification&, Table1& t);
 
 void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Table1& t) {
 	system("cls");
@@ -21,14 +22,15 @@ void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Ta
 
 	if (choice == 1) {
 		cout << "Enter count of meal : ";
-		int count;
-		cin >> count;
-		if (count > 0) {
+		static int countofmeal;
+		cin >> countofmeal;
+		
+		if (countofmeal > 0) {
 			auto meal = k.GetMealById(view);
 
 			string content = k.GetMealById(view)->GetName();
 			string tableNo = c.GetTableNo();
-			totaldebt += count * meal->GetPrice();
+			totaldebt += countofmeal * meal->GetPrice();
 			cout << "You must pay " << totaldebt << " $ " << endl;
 			cout << "Continue       [1]" << endl;
 			cout << "Finish process [2]" << endl;
@@ -36,7 +38,7 @@ void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Ta
 			int choice;
 			cin >> choice;
 			if (choice == 2) {
-				Notification n(count, content, tableNo);
+				Notification n(countofmeal, content, tableNo);
 				SendNotification(n, k);
 			}
 			else if (choice == 1) {

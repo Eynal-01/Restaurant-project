@@ -3,6 +3,49 @@
 #include"Stack.h"
 using namespace std;
 
+class ClientNotification {
+	string content;
+	string tableNo;
+public:
+	ClientNotification() = default;
+	ClientNotification(const string& content, const string& tableNo) {
+		SetContent(content);
+		SetTableNo(tableNo);
+	}
+
+#pragma region Setters
+	void SetContent(const string& content) {
+		if (!content.empty()) {
+			this->content = content;
+		}
+		//throw "Content is null of client notification";
+	}
+	void SetTableNo(const string& tableNo) {
+		if (!tableNo.empty()) {
+			this->tableNo = tableNo;
+		}
+		//throw "No of table is empty";
+	}
+#pragma endregion
+
+#pragma region Getters
+	string GetTableNo()const noexcept {
+		return tableNo;
+	}
+	string GetContent()const noexcept {
+		return content;
+	}
+#pragma endregion
+
+	friend ostream& operator<<(ostream& out, const ClientNotification& clientnotifications);
+};
+
+ostream& operator<<(ostream& out, const ClientNotification& clientnotifications) {
+	out << "Content : " << clientnotifications.GetContent() << endl;
+	out << "Table NO : " << clientnotifications.GetTableNo() << endl;
+	return out;
+}
+
 class Notification {
 	int quantity;
 	string content;
@@ -61,36 +104,44 @@ class Table1 {
 	string message;
 	string name;
 public:
-	int notificationcount;
+	static int notificationcount;
+	Stack<ClientNotification>clientnotification;
 	Stack<Notification>notifications;
 	Table1() = default;
 	Table1(const int& notif) {
 		SetCount(notificationcount);
 	}
 
+#pragma region Setters
+	void SetMessage(const string& message) {
+		this->message = message;
+	}
+	void SetCount(const int& notificationcount) {
+		this->notificationcount = notificationcount;
+	}
+	void SetName(const string& name) {
+		this->name = name;
+	}
+#pragma endregion
+
+#pragma region Getters
+	string GetMessage() const {
+		return message;
+	}
 	int GetNotificationCount()const {
 		return notificationcount;
 	}
 	string GetName()const {
 		return name;
 	}
+#pragma endregion
 
-	void SetCount(const int& count) {
-		this->notificationcount = notificationcount;
-	}
-	void SetName(const string& name) {
-		this->name = name;
-	}
-	string GetMessage() const {
-		return message;
-	}
-	void SetMessage(const string& message) {
-		this->message = message;
-	}
 	void AddNotification(const Notification& notification) {
 		notifications.Push(notification);
 	}
 };
+
+int Table1::notificationcount = 0;
 
 class Product {
 	int id;
@@ -580,8 +631,8 @@ public:
 	}
 };
 
-void SendNotificationToClient(Notification& n, Table1& t) {
-	t.notifications.Push(n);
+void SendNotificationToClient(ClientNotification& n, Table1& t) {
+	t.clientnotification.Push(n);
 	t.notificationcount++;
 }
 

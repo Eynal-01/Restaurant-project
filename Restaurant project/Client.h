@@ -1,7 +1,10 @@
 #pragma once
 #include<iostream>
 #include"Entities.h"
+#include"Menu.h"
 using namespace std;
+
+void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Table1& t);
 
 void GuestPanel(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Table1& t) {
 	while (true)
@@ -70,9 +73,9 @@ void GuestPanel(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification&
 			
 		}
 		else if (selectentrance == 4) {
-			for (size_t i = 0; i < t.GetNotificationCount(); i++)
+			for (size_t i = 0; i < t.notificationcount; i++)
 			{
-				t.notifications.Show();
+				t.clientnotification.Show();
 			}
 			t.notificationcount--;
 			system("pause");

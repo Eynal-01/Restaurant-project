@@ -30,7 +30,7 @@ public:
 		}
 	}*/
 
-	/*static Stock Read() {
+	static Stock Read() {
 		Stock stock;
 		ifstream fin(filename);
 
@@ -57,5 +57,5 @@ public:
 			fin.close();
 			return stock;
 		}
-	}*/
+	}
 };

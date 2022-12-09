@@ -46,25 +46,25 @@ void main() {
 	stock.AddProduct(p10);
 
 	Meal f(20, "Margarita");
-	f.AddProduct(p);
-	f.AddProduct(p1);
-	f.AddProduct(p2);
-	f.AddProduct(p3);
+	f.AddProduct(p, 2);
+	f.AddProduct(p1, 1);
+	f.AddProduct(p2, 3);
+	f.AddProduct(p3, 1);
 
 	Meal f1(25, "Sezar");
-	f1.AddProduct(p);
-	f1.AddProduct(p1);
-	f1.AddProduct(p3);
-	f1.AddProduct(p4);
+	f1.AddProduct(p, 1);
+	f1.AddProduct(p1, 2);
+	f1.AddProduct(p3, 2);
+	f1.AddProduct(p4, 3);
 
 	Meal f2(40, "Capital salad");
-	f2.AddProduct(p4);
-	f2.AddProduct(p5);
-	f2.AddProduct(p6);
-	f2.AddProduct(p7);
-	f2.AddProduct(p8);
-	f2.AddProduct(p9);
-	f2.AddProduct(p10);
+	f2.AddProduct(p4, 4);
+	f2.AddProduct(p5, 3);
+	f2.AddProduct(p6, 2);
+	f2.AddProduct(p7, 1);
+	f2.AddProduct(p8, 3);
+	f2.AddProduct(p9, 2);
+	f2.AddProduct(p10, 4);
 
 	Kitchen k;
 	k.AddMeal(f);
@@ -77,7 +77,7 @@ void main() {
 
 	FileHelper::Save(stock);
 
-	Table1 t;
+	Table t;
 	//Stock obj = FileHelper::Read();
 	//obj.ShowProduct();
 

@@ -74,16 +74,15 @@ void AdminPanel(Kitchen& k, Stock& s, Client& c, Notification& n, Table1& t) {
 			int count;
 			if (answer == 1) {
 				string tableNo = c.GetTableNo();
-				int count = n.GetQuantity();
-				static string content = "We can't preparing your order";
-				Notification n(count, content, tableNo);
+				int count;
+				static string content = "We can't preparing your order. Because we are very busy now";
+				ClientNotification n(content, tableNo);
 				SendNotificationToClient(n, t);
 			}
 			else if (answer == 2) {
 				string tableNo = c.GetTableNo();
-				int count = n.GetQuantity();
 				static string content = "We preparing your order. Please wait 10 minutes";
-				Notification n(count, content, tableNo);
+				ClientNotification n(content, tableNo);
 				SendNotificationToClient(n, t);
 			}
 		}
