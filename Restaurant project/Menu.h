@@ -4,7 +4,7 @@
 #include"Client.h"
 using namespace std;
 
-void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Table& t) {
+void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Table& t, Product& p) {
 	system("cls");
 	c.ShowMenu();
 	cout << "Enter your choice to view : ";
@@ -41,6 +41,9 @@ void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Ta
 				SendNotification(n, k);
 			}
 			else if (choice == 1) {
+				Notification n(countofmeal, tableNo);
+				n.AddMealToNotification(meal);
+				SendNotification(n, k);
 				GuestPanel(totaldebt, c, k, s, n, t);
 			}
 		}

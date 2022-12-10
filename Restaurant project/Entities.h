@@ -228,6 +228,7 @@ public:
 	void ShowMealsName()const {
 		cout << GetName() << endl;
 	}
+
 	friend ostream& operator<<(ostream& out, Meal& meal);
 };
 
