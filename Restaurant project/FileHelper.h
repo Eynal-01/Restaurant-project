@@ -5,57 +5,45 @@ using namespace std;
 
 class FileHelper {
 public:
-	static string filename;
-
-	static void Save(Stock& stock) {
-		ofstream fout(filename, ios::app);
-		if (fout.is_open()) {
-			fout << stock.GetIngredientsCount() << endl;
-			for (size_t i = 0; i < stock.GetIngredientsCount(); i++)
-			{
-				fout << stock.products[i].GetName() << " " << stock.products[i].GetPrice() <<
-					" " << stock.products[i].GetCalories() << " " << stock.products[i].GetProductCount() << endl;
-			}fout.close();
-		}
-	}
-
-	/*static void SaveProduct(const Product& p) {
-		ofstream fout(filename, ios::app);
-		if (fout.is_open()) {
-			fout << "Name : " << p.GetName() << endl;
-			fout << "Calories : " << p.GetCalories() << endl;
-			fout << "Count : " << p.GetProductCount() << endl;
-			fout << endl;
-			fout.close();
-		}
-	}*/
-
-	static Stock Read() {
-		Stock stock;
-		ifstream fin(filename);
-
-		if (fin.is_open()) {
-
-			int count;
-			fin >> count;
-
-			for (size_t i = 0; i < count; i++)
-			{
-				Product* p = new Product;
-				string name;
-				double price;
-				double calories;
-				int count;
-
-				fin >> name >> calories;
-				p->SetName(name);
-				p->SetPrice(price);
-				p->SetCalories(calories);
-				p->SetProductCount(count);
-				stock.AddProduct(*p);
-			}
-			fin.close();
-			return stock;
-		}
-	}
+    static string filename;
+    static void Save(Stock& stock) {
+        ofstream fout(filename, ios::app);
+        if (fout.is_open()) {
+            int count1 = stock.GetIngredientsCount();
+            fout << count1 << endl;
+            for (size_t i = 0; i < stock.products.size(); i++)
+            {
+                fout << stock.products[i].GetName() << " " << stock.products[i].GetPrice() << " " << stock.products[i].GetCalories() << " " << stock.products[i].GetProductCount() << endl;
+            }
+            fout.close();
+        }
+    }
+    static Stock Read() {
+        Stock stock;
+        ifstream fin(filename);
+        int count1;
+        fin >> count1;
+        if (fin.is_open()) {
+            for (size_t i = 0; i < count1; i++)
+            {
+                Product p;
+                string name;
+                double price;
+                double calories;
+                int count;
+                fin >> name;
+                fin >> price;
+                fin >> calories;
+                fin >> count;
+                p.SetName(name);
+                p.SetPrice(price);
+                p.SetCalories(calories);
+                p.SetProductCount(count);
+                stock.AddProduct(p);
+            }
+            fin.close();
+            return stock;
+        }
+    }
 };
+string FileHelper::filename = "products.txt";

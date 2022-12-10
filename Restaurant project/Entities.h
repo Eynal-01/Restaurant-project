@@ -1,5 +1,9 @@
 #pragma once
 #include<iostream>
+#include<assert.h>
+#include<string>
+#include<list>
+#include<vector>
 #include"Stack.h"
 using namespace std;
 
@@ -46,110 +50,13 @@ ostream& operator<<(ostream& out, const ClientNotification& clientnotifications)
 	return out;
 }
 
-class Notification {
-	int quantity;
-	string content;
-	string tableNo;
-public:
-	Notification() = default;
-	Notification(const int& quantity, const string& content, const string& tableNo) {
-		SetNotificationContent(content);
-		SetNotificationQuantity(quantity);
-		SetTableNo(tableNo);
-	}
-#pragma region Setters
-	void SetNotificationContent(const string& content) {
-		if (!content.empty()) {
-			this->content = content;
-		}
-		//throw "Content of notification is null";
-	}
-	void SetNotificationQuantity(const int& quantity) {
-		if (quantity > 0) {
-			this->quantity = quantity;
-		}
-		//throw "Quantity of notification is null";
-	}
-	void SetTableNo(const string& tableNo) {
-		if (!tableNo.empty()) {
-			this->tableNo = tableNo;
-		}
-		//throw "No of table is empty";
-	}
-#pragma endregion
-
-#pragma region Getters
-	int GetQuantity()const noexcept {
-		return quantity;
-	}
-	string GetContent()const noexcept {
-		return content;
-	}
-	string GetTableNo()const noexcept {
-		return tableNo;
-	}
-#pragma endregion
-
-	friend ostream& operator<<(ostream& out, const Notification& notifications);
-};
-
-ostream& operator<<(ostream& out, const Notification& notifications) {
-	out << "Meal Name : " << notifications.GetContent() << endl;
-	out << "Meal count : " << notifications.GetQuantity() << endl;
-	out << "Table no : " << notifications.GetTableNo() << endl;
-	return out;
-}
-
-class Table1 {
-	string message;
-	string name;
-public:
-	static int notificationcount;
-	Stack<ClientNotification>clientnotification;
-	Stack<Notification>notifications;
-	Table1() = default;
-	Table1(const int& notif) {
-		SetCount(notificationcount);
-	}
-
-#pragma region Setters
-	void SetMessage(const string& message) {
-		this->message = message;
-	}
-	void SetCount(const int& notificationcount) {
-		this->notificationcount = notificationcount;
-	}
-	void SetName(const string& name) {
-		this->name = name;
-	}
-#pragma endregion
-
-#pragma region Getters
-	string GetMessage() const {
-		return message;
-	}
-	int GetNotificationCount()const {
-		return notificationcount;
-	}
-	string GetName()const {
-		return name;
-	}
-#pragma endregion
-
-	void AddNotification(const Notification& notification) {
-		notifications.Push(notification);
-	}
-};
-
-int Table1::notificationcount = 0;
-
 class Product {
 	int id;
 	double price;
 	double calories;
-	int productCount;
 	string name;
 public:
+	static int productCount;
 	static int ID;
 	Product() = default;
 	Product(const string& name, const double& price, const double& calories, const int& productCount) {
@@ -194,7 +101,7 @@ public:
 	int GetID()const {
 		return id;
 	}
-	int GetProductCount()const {
+	static int GetProductCount() {
 		return productCount;
 	}
 #pragma endregion
@@ -207,6 +114,8 @@ ostream& operator<<(ostream& out, const Product& products) {
 	out << "Product calories : " << products.GetCalories() << endl;
 	return out;
 }
+
+int Product::productCount = 0;
 
 class Meal {
 	int id;
@@ -251,6 +160,9 @@ public:
 		{
 			allCalories += products[i].GetCalories();
 		}
+	}
+	int GetProductCount()const noexcept {
+		return Product::GetProductCount();
 	}
 #pragma endregion
 
@@ -304,8 +216,11 @@ public:
 		}
 	}
 
-	void AddProduct(Product& product) {
-		products.Push(product);
+	void AddProduct(Product& product, const int& productcount) {
+		for (size_t i = 0; i < productcount; i++)
+		{
+			products.Push(product);
+		}
 	}
 	void ShowIngredients() {
 		products.Show();
@@ -324,6 +239,102 @@ ostream& operator<<(ostream& out, Meal& meal) {
 	out << "Calories of Meal : " << meal.allCalories << endl << endl;
 	return out;
 }
+
+class Notification {
+	int quantity;
+	string tableNo;
+public:
+	Stack<Meal>meals;
+	Notification() = default;
+	Notification(const int& quantity, const string& tableNo) {
+		SetNotificationQuantity(quantity);
+		SetTableNo(tableNo);
+	}
+#pragma region Setters
+
+	void SetNotificationQuantity(const int& quantity) {
+		if (quantity > 0) {
+			this->quantity = quantity;
+		}
+		//throw "Quantity of notification is null";
+	}
+	void SetTableNo(const string& tableNo) {
+		if (!tableNo.empty()) {
+			this->tableNo = tableNo;
+		}
+		//throw "No of table is empty";
+	}
+#pragma endregion
+
+#pragma region Getters
+	int GetQuantity()const noexcept {
+		return quantity;
+	}
+	string GetTableNo()const noexcept {
+		return tableNo;
+	}
+#pragma endregion
+
+	void AddMealToNotification(Meal* meal) {
+		meals.Push(*meal);
+	}
+
+	friend ostream& operator<<(ostream& out, const Notification& notifications);
+};
+
+ostream& operator<<(ostream& out, Notification& notifications) {
+	for (size_t i = 0; i < notifications.meals.GetSize(); i++)
+	{
+		out << notifications.meals[i] << endl;
+	}
+	out << "Meal count : " << notifications.GetQuantity() << endl;
+	out << "Table no : " << notifications.GetTableNo() << endl;
+
+	return out;
+}
+
+class Table {
+	string message;
+	string name;
+public:
+	static int notificationcount;
+	Stack<ClientNotification>clientnotification;
+	Stack<Notification>notifications;
+	Table() = default;
+	Table(const int& notif) {
+		SetCount(notificationcount);
+	}
+
+#pragma region Setters
+	void SetMessage(const string& message) {
+		this->message = message;
+	}
+	void SetCount(const int& notificationcount) {
+		this->notificationcount = notificationcount;
+	}
+	void SetName(const string& name) {
+		this->name = name;
+	}
+#pragma endregion
+
+#pragma region Getters
+	string GetMessage() const {
+		return message;
+	}
+	int GetNotificationCount()const {
+		return notificationcount;
+	}
+	string GetName()const {
+		return name;
+	}
+#pragma endregion
+
+	void AddNotification(const Notification& notification) {
+		notifications.Push(notification);
+	}
+};
+
+int Table::notificationcount = 0;
 
 class Kitchen {
 public:
@@ -344,9 +355,6 @@ public:
 		return notificationCount;
 	}
 
-	Stack<Notification> GetNotifications()const {
-		return notification;
-	}
 
 	void AddMeal(Meal& meal) {
 		meals.Push(meal);
@@ -446,7 +454,7 @@ int Kitchen::notificationCount = 0;
 
 class Client {
 	Stack<Kitchen>menu;
-	Stack<Table1>table;
+	Stack<Table>table;
 public:
 	string tableNo;
 	Client() = default;
@@ -483,7 +491,7 @@ public:
 
 class Stock {
 public:
-	Stack<Product>products;
+	vector<Product>products;
 	Stock() = default;
 	/*void ShowAllProducts() {
 		cout << "     ALL PRODUCTS" << endl << endl;
@@ -496,11 +504,11 @@ public:
 	}*/
 
 	void AddProduct(Product& product) {
-		products.Push(product);
+		products.push_back(product);
 	}
 
 	Product* GetProductByID(int index = -1) {
-		for (size_t i = 0; i < products.GetSize(); i++)
+		for (size_t i = 0; i < products.size(); i++)
 		{
 			if (products[i].GetID() == index) {
 				return &products[i];
@@ -509,10 +517,8 @@ public:
 		}
 	}
 
-
-
-	bool ProductCount(int index, int count) {
-		auto product = GetProductByID(index);
+	bool CheckProductCount(int index, int count) {
+		Product* product = GetProductByID(index);
 		if (count <= product->GetProductCount()) {
 			int temp = product->GetProductCount() - count;
 			products[index].SetProductCount(temp);
@@ -520,36 +526,41 @@ public:
 		}
 		else {
 			cout << "This count very high" << endl;
-			cout << "Back to client menu" << endl;
+			cout << "Press any keyy and back to client menu" << endl;
 			system("pause");
 			return false;
 		}
 	}
 
 	void DeleteIngredientsByID(int index = -1) {
-		products.Pop(index);
+		if (index == -1) {
+			products.pop_back();
+		}
+		else {
+			products.erase(products.begin() + index);
+		}
 	}
 
 	int GetIngredientsCount()const {
-		return products.GetSize();
+		return products.size();
 	}
 
 	void ShowNameOfProducts() {
-		for (size_t i = 0; i < products.GetSize(); i++)
+		for (size_t i = 0; i < products.size(); i++)
 		{
 			cout << products[i].GetID() << " " << products[i].GetName() << " - " << products[i].GetPrice() << " $ " << endl;
 		}
 	}
 
 	void ShowProduct() {
-		for (size_t i = 0; i < products.GetSize(); i++)
+		for (size_t i = 0; i < products.size(); i++)
 		{
 			cout << "ID : " << products[i].GetID() << "\nName of product : " << products[i].GetName() << "\nCount of product : " << products[i].GetProductCount() << endl << endl;
 		}
 	}
 
 	void ShowProductsToClient() {
-		for (size_t i = 0; i < products.GetSize(); i++)
+		for (size_t i = 0; i < products.size(); i++)
 		{
 			cout << "ID : " << products[i].GetID() << "\nName of ingredient : " << products[i].GetName() << "\nCalories of ingredient : " << products[i].GetCalories() << endl << endl;
 		}
@@ -626,17 +637,22 @@ public:
 		int count;
 		cin >> count;
 		Product p(name, price, calory, count);
-		products.Push(p);
+		products.push_back(p);
 		//FileHelper::SaveProduct(p);
 	}
 };
 
-void SendNotificationToClient(ClientNotification& n, Table1& t) {
+void SendNotificationToClient(ClientNotification& n, Table& t) {
 	t.clientnotification.Push(n);
 	t.notificationcount++;
 }
 
-void SendNotification(Notification& n, Kitchen& k) {
-	k.notification.Push(n);
+void SendNotification(Notification& n1, Kitchen& k) {
+	k.notification.Push(n1);
 	k.notificationCount++;
 }
+
+//void SendAddIngredient(AddIngredientNotification& add, Kitchen& k) {
+//	k.notification.Push(add);
+//	k.notificationCount++;
+//}

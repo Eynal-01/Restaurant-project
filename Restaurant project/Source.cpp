@@ -16,34 +16,32 @@ using namespace std;
 int Meal::ID = 1;
 int Product::ID = 1;
 
-string FileHelper::filename = "products.txt";
-
 void main() {
 
 	Product p("Tomato", 0.4, 18, 100);
-	Product p1("Olive", 0.5, 115, 1000);
-	Product p2("Mashroom", 0.8, 22, 1000);
+	Product p1("Olive", 0.5, 115, 100);
+	Product p2("Mashroom", 0.8, 22, 100);
 	Product p3("Flour", 1, 364, 100);
-	Product p4("Chicken fillet", 2, 239, 200);
-	Product p5("Mayonnaise", 2.5, 679.7, 150);
-	Product p6("Beans", 1, 347, 200);
-	Product p7("Cucumber", 0.7, 30, 120);
-	Product p8("Cucumber pickle", 1, 10.7, 130);
-	Product p9("Carrot", 1, 41, 140);
-	Product p10("Potato", 1, 76.7, 150);
+	//Product p4("Chicken", 2, 239, 100);
+	Product p5("Mayonnaise", 2.5, 679.7, 100);
+	Product p6("Beans", 1, 347, 100);
+	Product p7("Cucumber", 0.7, 30, 100);
+	Product p8("Cucumber", 1, 10.7, 100);
+	Product p9("Carrot", 1, 41, 100);
+	Product p10("Potato", 1, 76.7, 100);
 
-	Stock stock;
-	stock.AddProduct(p);
-	stock.AddProduct(p1);
-	stock.AddProduct(p2);
-	stock.AddProduct(p3);
-	stock.AddProduct(p4);
-	stock.AddProduct(p5);
-	stock.AddProduct(p6);
-	stock.AddProduct(p7);
-	stock.AddProduct(p8);
-	stock.AddProduct(p9);
-	stock.AddProduct(p10);
+	Stock stock1;
+	stock1.AddProduct(p);
+	stock1.AddProduct(p1);
+	stock1.AddProduct(p2);
+	stock1.AddProduct(p3);
+	//stock1.AddProduct(p4);
+	stock1.AddProduct(p5);
+	stock1.AddProduct(p6);
+	stock1.AddProduct(p7);
+	stock1.AddProduct(p8);
+	stock1.AddProduct(p9);
+	stock1.AddProduct(p10);
 
 	Meal f(20, "Margarita");
 	f.AddProduct(p, 2);
@@ -55,10 +53,10 @@ void main() {
 	f1.AddProduct(p, 1);
 	f1.AddProduct(p1, 2);
 	f1.AddProduct(p3, 2);
-	f1.AddProduct(p4, 3);
+	//f1.AddProduct(p4, 3);
 
 	Meal f2(40, "Capital salad");
-	f2.AddProduct(p4, 4);
+	//f2.AddProduct(p4, 4);
 	f2.AddProduct(p5, 3);
 	f2.AddProduct(p6, 2);
 	f2.AddProduct(p7, 1);
@@ -75,11 +73,12 @@ void main() {
 	c.AddMenu(k);
 	double totaldebt = 0;
 
-	FileHelper::Save(stock);
+	//FileHelper::Save(stock1);
+
+	Stock stock = FileHelper::Read();
 
 	Table t;
-	//Stock obj = FileHelper::Read();
-	//obj.ShowProduct();
+	
 
 	Notification n;
 	while (true)

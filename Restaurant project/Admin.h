@@ -1,9 +1,9 @@
 #pragma once
 #include<iostream>
 #include"Entities.h"
-using namespace std; 
+using namespace std;
 
-void AdminPanel(Kitchen& k, Stock& s, Client& c, Notification& n, Table1& t) {
+void AdminPanel(Kitchen& k, Stock& s, Client& c, Notification& n, Table& t) {
 	system("cls");
 	cout << "KITCHEN [1]" << endl;
 	cout << "STOCK   [2]" << endl;
@@ -12,13 +12,14 @@ void AdminPanel(Kitchen& k, Stock& s, Client& c, Notification& n, Table1& t) {
 	int adminselect = 0;
 	cin >> adminselect;
 	if (adminselect == 1) {
-		cout << "\t\t\t\t===KITCHEN===" << endl;
+		system("cls");
+		cout << "\t\t\t\t\t\t===KITCHEN===" << endl << endl;
 		k.ShowNameOfMeals();
 		cout << endl;
-		cout << "Delete meal   [1]" << endl;
-		cout << "Update meal   [2]" << endl;
-		cout << "Add meal      [3]" << endl;
-		cout << "Notifications [4]" << "(" << k.notificationCount << ")" << endl;
+		cout << "Delete meal   [1]" << endl << endl;
+		cout << "Update meal   [2]" << endl << endl;
+		cout << "Add meal      [3]" << endl << endl;
+		cout << "Notifications [4]" << "(" << k.notificationCount << ")" << endl << endl;
 
 		cout << "Enter your select : ";
 		int processselect;
@@ -62,10 +63,13 @@ void AdminPanel(Kitchen& k, Stock& s, Client& c, Notification& n, Table1& t) {
 			AdminPanel(k, s, c, n, t);
 		}
 		else if (processselect == 4) {
-			for (size_t i = 0; i < k.notificationCount; i++)
-			{
-				k.notification.Show();
-			}
+			/*if (k.notificationCount > 1) {
+				k.notificationCount--;*/
+				for (size_t i = 0; i < k.notificationCount; i++)
+				{
+					k.notification.Show();
+				}
+			//}
 			k.notificationCount--;
 			cout << "Reject [1]\nAccept [2]" << endl;
 			cout << "Enter your answer : ";

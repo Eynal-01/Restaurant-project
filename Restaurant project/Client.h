@@ -4,9 +4,9 @@
 #include"Menu.h"
 using namespace std;
 
-void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Table1& t);
+void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Table& t);
 
-void GuestPanel(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Table1& t) {
+void GuestPanel(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Table& t) {
 	while (true)
 	{
 		system("cls");

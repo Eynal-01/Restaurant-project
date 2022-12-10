@@ -6,7 +6,7 @@ using namespace std;
 
 //void GuestPanel(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification&, Table1& t);
 
-void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Table1& t) {
+void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Table& t) {
 	system("cls");
 	c.ShowMenu();
 	cout << "Enter your choice to view : ";
@@ -38,7 +38,8 @@ void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Ta
 			int choice;
 			cin >> choice;
 			if (choice == 2) {
-				Notification n(countofmeal, content, tableNo);
+				Notification n(countofmeal, tableNo);
+				n.AddMealToNotification(meal);
 				SendNotification(n, k);
 			}
 			else if (choice == 1) {
@@ -55,13 +56,15 @@ void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Ta
 		cin >> ingcount;
 		auto product = s.GetProductByID(ingcount);
 		cout << *product << endl;
-		cout << "Enter " << product->GetName() << " count" << endl;
-		int count = 0;
-		cin >> count;
-		if (s.ProductCount(ingcount, count)) {
+		string productname = product->GetName();
+		cout << "Enter " << productname << " count" << endl;
+		int procount = 0;
+		cin >> procount;
+		if (s.CheckProductCount(ingcount, procount)) {
 			auto meal = k.GetMealById(view);
-			meal->AddProduct(*product);
+			meal->AddProduct(*product, procount);
 			cout << *meal << endl;
+
 			system("cls");
 			cout << "Product added successfully" << endl;
 			cout << "Do you want how much " << meal->GetName() << endl;
@@ -69,8 +72,15 @@ void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Ta
 			int quantitymeal;
 			cin >> quantitymeal;
 			if (quantitymeal > 0) {
-				totaldebt += (meal->GetPrice() + (product->GetPrice() * count)) * quantitymeal;
+				string tableNo = c.GetTableNo();
+				string content = k.GetMealById(view)->GetName();
+				totaldebt += (meal->GetPrice() + (product->GetPrice() * procount)) * quantitymeal;
 				cout << "Total cash : " << totaldebt << " $ " << endl;
+				Notification n1( quantitymeal, tableNo);
+				n1.AddMealToNotification(meal);
+				SendNotification(n1, k);
+				/*AddIngredientNotification add(productname, procount);
+				SendAddIngredient(add, k);*/
 			}
 			else {
 				cout << "Your select is incorrect" << endl;
