@@ -94,7 +94,7 @@ void AdminPanel(Kitchen& k, Stock& s, Client& c, Notification& n, Table& t) {
 	else if (adminselect == 2) {
 		system("cls");
 		cout << "=====STOCK=====" << endl;
-		s.ShowProduct();
+		s.ShowAllProducts();
 		cout << "Delete ingredients  [1]" << endl;
 		cout << "Add ingredients     [2]" << endl;
 		cout << "Update ingredients  [3]" << endl;

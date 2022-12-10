@@ -493,15 +493,15 @@ class Stock {
 public:
 	vector<Product>products;
 	Stock() = default;
-	/*void ShowAllProducts() {
+	void ShowAllProducts() {
 		cout << "     ALL PRODUCTS" << endl << endl;
 		int id = 1;
-		for (size_t i = 0; i < products.GetSize(); i++)
+		for (size_t i = 0; i < products.size(); i++)
 		{
 			cout << "ID : " << id++ << endl;
 			cout << products[i] << endl;
 		}
-	}*/
+	}
 
 	void AddProduct(Product& product) {
 		products.push_back(product);

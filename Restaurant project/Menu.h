@@ -4,8 +4,6 @@
 #include"Client.h"
 using namespace std;
 
-//void GuestPanel(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification&, Table1& t);
-
 void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Table& t) {
 	system("cls");
 	c.ShowMenu();
@@ -79,8 +77,6 @@ void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Ta
 				Notification n1( quantitymeal, tableNo);
 				n1.AddMealToNotification(meal);
 				SendNotification(n1, k);
-				/*AddIngredientNotification add(productname, procount);
-				SendAddIngredient(add, k);*/
 			}
 			else {
 				cout << "Your select is incorrect" << endl;
