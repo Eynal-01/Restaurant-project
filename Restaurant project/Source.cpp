@@ -74,16 +74,17 @@ void main() {
 
 	Stock stock = FileHelper::Read();
 
+	Meal m;
+
 	Table t;
-	
 
 	Notification n;
 	while (true)
 	{
 		system("cls");
-		cout << "CLIENT [1]" << endl;
-		cout << "ADMIN  [2]" << endl;
-		cout << "Enter select : ";
+		cout << "\t\t\t\t\t\t\t\tCLIENT [1]" << endl;
+		cout << "\t\t\t\t\t\t\t\tADMIN  [2]" << endl;
+		cout << "\t\t\t\t\t\t\t\tEnter select : ";
 		int select;
 		cin >> select;
 		if (select == 1) {
@@ -96,11 +97,11 @@ void main() {
 				cin.ignore();
 				cin.clear();
 				system("cls");
-				cout << "Enter username : ";
+				cout << "\t\t\t\t\t\t\t\tEnter username : ";
 				string username;
 				getline(cin, username);
 				system("cls");
-				cout << "Enter Password: ";
+				cout << "\t\t\t\t\t\t\t\tEnter Password: ";
 				string password, P;
 				char p;
 				p = _getch();
@@ -120,137 +121,27 @@ void main() {
 					p = _getch();
 					if (p != 13) {
 						system("cls");
-						cout << "Enter Password: ";
+						cout << "\t\t\t\t\t\t\t\tEnter Password: ";
 					}
 				}
 				cout << endl;
 				if (username == "admin") {
 					if (password == "admin") {
-						AdminPanel(k, stock, c, n, t);
+						AdminPanel(k, stock, c, n, t, m);
 						break;
 					}
 					else {
-						cout << "Wrong password!" << endl;
+						cout << "\t\t\t\t\t\t\t\tWrong password!" << endl;
 					}
 				}
 				else {
-					cout << "Wrong username!" << endl;
+					cout << "\t\t\t\t\t\t\t\tWrong username!" << endl;
 				}
 			}
 		}
 		else {
-			cout << "Your select is incorrect!!!\nPlease enter retry" << endl;
+			cout << "\t\t\t\t\t\t\t\tYour select is incorrect!!!\n\t\t\t\t\t\t\t\tPlease enter retry" << endl;
 		}
 		system("pause");
 	}
 }
-
-//class JobPosting {
-//public:
-//	string companyName;
-//	int count;
-//	Worker** appliers;
-//
-//	JobPosting() {}
-//
-//	JobPosting(const string& companyName) :companyName(companyName) {
-//
-//	}
-//
-//	Worker** GetAppliers()const {
-//		return appliers;
-//	}
-//
-//	void AddApplier(const Worker& applier) {
-//		auto newappliers = new Worker * [count + 1] {};
-//		for (size_t i = 0; i < count; i++)
-//		{
-//			newappliers[i] = appliers[i];
-//		}
-//		newappliers[count] = new Worker(applier);
-//		++count;
-//		appliers = newappliers;
-//		newappliers = nullptr;
-//	}
-//
-//
-//	void ShowAppliers() {
-//		cout << "Company name : " << companyName << endl;
-//		for (size_t i = 0; i < count; i++)
-//		{
-//			appliers[i]->Show();
-//		}
-//	}
-//
-//};
-//
-//
-//class FileHelper {
-//public:
-//	static string filename;
-//
-//	static void Save(const JobPosting& jp) {
-//		ofstream fout(filename, ios::app);
-//		if (fout.is_open()) {
-//			fout << jp.companyName << endl;
-//			fout << jp.count << endl;
-//			for (size_t i = 0; i < jp.count; i++)
-//			{
-//				fout << jp.appliers[i]->GetName() << " " << jp.appliers[i]->GetAge() << endl;
-//			}
-//			fout.close();
-//		}
-//	}
-//
-//
-//	static JobPosting Read() {
-//		JobPosting jp;
-//		ifstream fin(filename);
-//
-//		if (fin.is_open()) {
-//			string companyName = "";
-//			fin >> companyName;
-//			jp.companyName = companyName;
-//
-//			int count;
-//			fin >> count;
-//
-//			for (size_t i = 0; i < count; i++)
-//			{
-//				Worker* w = new Worker;
-//				string name;
-//				int age;
-//
-//				fin >> name >> age;
-//				w->SetName(name);
-//				w->SetAge(age);
-//
-//				jp.AddApplier(*w);
-//			}
-//			fin.close();
-//
-//			return jp;
-//		}
-//	}
-//};
-//
-//string FileHelper::filename = "job.txt";
-//
-//
-//void main() {
-//	Worker w1("Gulshen", 25);
-//	Worker w2("Ayshen", 29);
-//	Worker w3("Aysel", 35);
-//	Worker w4("John", 20);
-//
-//	JobPosting jp("IT_STEP_MMC");
-//	jp.AddApplier(w2);
-//	jp.AddApplier(w1);
-//	jp.AddApplier(w3);
-//	jp.AddApplier(w4);
-//
-//	//FileHelper::Save(jp);
-//
-//	JobPosting obj = FileHelper::Read();
-//	obj.ShowAppliers();
-//}

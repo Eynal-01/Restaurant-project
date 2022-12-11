@@ -120,10 +120,11 @@ int Product::productCount = 0;
 class Meal {
 	int id;
 	double price;
-	Stack<Product>products;
 	string name;
 	double allCalories;
 public:
+	Stack<Product>products;
+	static int productcount;
 	static int ID;
 	Meal() = default;
 	Meal(const double& price, const string& name) {
@@ -364,7 +365,7 @@ public:
 	void ShowNameOfMeals() {
 		for (size_t i = 0; i < meals.GetSize(); i++)
 		{
-			cout << meals[i].GetID() << " " << meals[i].GetName() << " - " << meals[i].GetPrice() << " $ " << endl;
+			cout << "\t\t\t\t\t\t\t\t" << meals[i].GetID() << " " << meals[i].GetName() << " - " << meals[i].GetPrice() << " $ " << endl;
 		}
 	}
 
@@ -494,15 +495,6 @@ class Stock {
 public:
 	vector<Product>products;
 	Stock() = default;
-	void ShowAllProducts() {
-		cout << "     ALL PRODUCTS" << endl << endl;
-		int id = 1;
-		for (size_t i = 0; i < products.size(); i++)
-		{
-			cout << "ID : " << id++ << endl;
-			cout << products[i] << endl;
-		}
-	}
 
 	void AddProduct(Product& product) {
 		products.push_back(product);
@@ -516,6 +508,15 @@ public:
 			}
 			//throw "This ingredient is unavailable";
 		}
+	}
+
+	int GetIngredientsCount()const {
+		return products.size();
+	}
+
+	int GetOneProductCount()const {
+		Product* prod;
+		return prod->GetProductCount();
 	}
 
 	bool CheckProductCount(int index, int count) {
@@ -542,28 +543,20 @@ public:
 		}
 	}
 
-	int GetIngredientsCount()const {
-		return products.size();
-	}
-
-	void ShowNameOfProducts() {
-		for (size_t i = 0; i < products.size(); i++)
-		{
-			cout << products[i].GetID() << " " << products[i].GetName() << " - " << products[i].GetPrice() << " $ " << endl;
-		}
-	}
-
 	void ShowProduct() {
 		for (size_t i = 0; i < products.size(); i++)
 		{
-			cout << "ID : " << products[i].GetID() << "\nName of product : " << products[i].GetName() << "\nCount of product : " << products[i].GetProductCount() << endl << endl;
+			cout << "\t\t\t\t\t\t\t\t\tID : " << products[i].GetID() << "\n\t\t\t\t\t\t\t\t\tName of product : " << products[i].GetName() <<
+				"\n\t\t\t\t\t\t\t\t\tCount of product : " << products[i].GetProductCount() << endl
+				<< "\t\t\t\t\t\t\t\t\tPrice of product : " << products[i].GetPrice() << endl << endl;
 		}
 	}
 
 	void ShowProductsToClient() {
 		for (size_t i = 0; i < products.size(); i++)
 		{
-			cout << "ID : " << products[i].GetID() << "\nName of ingredient : " << products[i].GetName() << "\nCalories of ingredient : " << products[i].GetCalories() << endl << endl;
+			cout << "ID : " << products[i].GetID() << "\nName of ingredient : " << products[i].GetName() <<
+				"\nCalories of ingredient : " << products[i].GetCalories() << endl << endl;
 		}
 	}
 

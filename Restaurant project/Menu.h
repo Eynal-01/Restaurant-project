@@ -2,24 +2,27 @@
 #include<iostream>
 #include"Entities.h"
 #include"Client.h"
+#include"FrontEnd.h"
 using namespace std;
 
-void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Table& t, Product& p) {
+void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Table& t) {
 	system("cls");
 	c.ShowMenu();
-	cout << "Enter your choice to view : ";
+	cout << "\t\t\t\t\t\t\t\tEnter your choice to view : ";
 	int view;
 	cin >> view;
+	
 	system("cls");
+	MealWord();
 	k.ShowMealById(view);
-	cout << "Order            [1]" << endl;
-	cout << "Add ingredients  [2]" << endl;
-	cout << "Enter your choice : ";
+	cout << "\t\t\t\t\t\t\t\tOrder            [1]" << endl;
+	cout << "\t\t\t\t\t\t\t\tAdd ingredients  [2]" << endl;
+	cout << "\t\t\t\t\t\t\t\tEnter your choice : ";
 	int choice;
 	cin >> choice;
 
 	if (choice == 1) {
-		cout << "Enter count of meal : ";
+		cout << "\t\t\t\t\t\t\t\tEnter count of meal : ";
 		static int countofmeal;
 		cin >> countofmeal;
 		
@@ -29,10 +32,10 @@ void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Ta
 			string content = k.GetMealById(view)->GetName();
 			string tableNo = c.GetTableNo();
 			totaldebt += countofmeal * meal->GetPrice();
-			cout << "You must pay " << totaldebt << " $ " << endl;
-			cout << "Continue       [1]" << endl;
-			cout << "Finish process [2]" << endl;
-			cout << "Enter your choice : ";
+			cout << "\t\t\t\t\t\t\t\tYou must pay " << totaldebt << " $ " << endl;
+			cout << "\t\t\t\t\t\t\t\tContinue       [1]" << endl;
+			cout << "\t\t\t\t\t\t\t\tFinish process [2]" << endl;
+			cout << "\t\t\t\t\t\t\t\tEnter your choice : ";
 			int choice;
 			cin >> choice;
 			if (choice == 2) {
@@ -51,14 +54,14 @@ void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Ta
 	else if (choice == 2) {
 		system("cls");
 		s.ShowProductsToClient();
-		cout << "Enter number of ingredient : ";
+		cout << "\t\t\t\t\t\t\t\tEnter number of ingredient : ";
 
 		int ingcount;
 		cin >> ingcount;
 		auto product = s.GetProductByID(ingcount);
 		cout << *product << endl;
 		string productname = product->GetName();
-		cout << "Enter " << productname << " count" << endl;
+		cout << "\t\t\t\t\t\t\t\tEnter " << productname << " count" << endl;
 		int procount = 0;
 		cin >> procount;
 		if (s.CheckProductCount(ingcount, procount)) {
@@ -67,28 +70,28 @@ void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Ta
 			cout << *meal << endl;
 
 			system("cls");
-			cout << "Product added successfully" << endl;
-			cout << "Do you want how much " << meal->GetName() << endl;
-			cout << "Enter quantity of meal : ";
+			cout << "\t\t\t\t\t\t\t\tProduct added successfully" << endl;
+			cout << "\t\t\t\t\t\t\t\tDo you want how much " << meal->GetName() << endl;
+			cout << "\t\t\t\t\t\t\t\tEnter quantity of meal : ";
 			int quantitymeal;
 			cin >> quantitymeal;
 			if (quantitymeal > 0) {
 				string tableNo = c.GetTableNo();
 				string content = k.GetMealById(view)->GetName();
 				totaldebt += (meal->GetPrice() + (product->GetPrice() * procount)) * quantitymeal;
-				cout << "Total cash : " << totaldebt << " $ " << endl;
+				cout << "\t\t\t\t\t\t\t\tTotal cash : " << totaldebt << " $ " << endl;
 				Notification n1( quantitymeal, tableNo);
 				n1.AddMealToNotification(meal);
 				SendNotification(n1, k);
 			}
 			else {
-				cout << "Your select is incorrect" << endl;
+				cout << "\t\t\t\t\t\t\t\tYour select is incorrect" << endl;
 			}
 		}
 		else {
 			auto meal = k.GetMealById(view);
 			totaldebt += meal->GetPrice();
-			cout << "Ingredients out of stock" << endl;
+			cout << "\t\t\t\t\t\t\t\tIngredients out of stock" << endl;
 		}
 	}
 }

@@ -13,7 +13,9 @@ public:
             fout << count1 << endl;
             for (size_t i = 0; i < stock.products.size(); i++)
             {
-                fout << stock.products[i].GetName() << " " << stock.products[i].GetPrice() << " " << stock.products[i].GetCalories() << " " << stock.products[i].GetProductCount() << endl;
+                fout << stock.products[i].GetID() << " " << stock.products[i].GetName() 
+              << " " << stock.products[i].GetPrice() << " " << stock.products[i].GetCalories() << 
+                    " " << stock.products[i].GetProductCount() << endl;
             }
             fout.close();
         }
@@ -27,14 +29,17 @@ public:
             for (size_t i = 0; i < count1; i++)
             {
                 Product p;
+                int id;
                 string name;
                 double price;
                 double calories;
                 int count;
+                fin >> id;
                 fin >> name;
                 fin >> price;
                 fin >> calories;
                 fin >> count;
+                p.SetID(id);
                 p.SetName(name);
                 p.SetPrice(price);
                 p.SetCalories(calories);
