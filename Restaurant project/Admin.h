@@ -78,24 +78,17 @@ void AdminPanel(Kitchen& k, Stock& s, Client& c, Notification& n, Table& t, Meal
 			cin >> answer;
 			int count;
 			if (answer == 1) {
-				string tableNo = c.GetTableNo();
+				int tableNo = c.GetTableNo();
 				int count;
 				static string content = "We can't preparing your order. Because we are very busy now";
 				ClientNotification n(content, tableNo);
 				SendNotificationToClient(n, t);
 			}
 			else if (answer == 2) {
-				string tableNo = c.GetTableNo();
+				int tableNo = c.GetTableNo();
 				static string content = "We preparing your order. Please wait 10 minutes";
 				ClientNotification n(content, tableNo);
 				SendNotificationToClient(n, t);
-				for (size_t i = 0; i < s.products.size(); i++)
-				{
-					if (m.products[i].GetName() == s.products[i].GetName()) {
-						int tempcount = s.products[i].GetProductCount() - m.products[i].GetProductCount();
-						s.products[i].SetProductCount(tempcount);
-					}
-				}
 			}
 		}
 	}

@@ -30,7 +30,7 @@ void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Ta
 			auto meal = k.GetMealById(view);
 
 			string content = k.GetMealById(view)->GetName();
-			string tableNo = c.GetTableNo();
+			int tableNo = c.GetTableNo();
 			totaldebt += countofmeal * meal->GetPrice();
 			cout << "\t\t\t\t\t\t\t\tYou must pay " << totaldebt << " $ " << endl;
 			cout << "\t\t\t\t\t\t\t\tContinue       [1]" << endl;
@@ -76,7 +76,7 @@ void Menu(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification& n, Ta
 			int quantitymeal;
 			cin >> quantitymeal;
 			if (quantitymeal > 0) {
-				string tableNo = c.GetTableNo();
+				int tableNo = c.GetTableNo();
 				string content = k.GetMealById(view)->GetName();
 				totaldebt += (meal->GetPrice() + (product->GetPrice() * procount)) * quantitymeal;
 				cout << "\t\t\t\t\t\t\t\tTotal cash : " << totaldebt << " $ " << endl;

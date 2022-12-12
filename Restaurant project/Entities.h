@@ -9,10 +9,10 @@ using namespace std;
 
 class ClientNotification {
 	string content;
-	string tableNo;
+	int tableNo;
 public:
 	ClientNotification() = default;
-	ClientNotification(const string& content, const string& tableNo) {
+	ClientNotification(const string& content, const int& tableNo) {
 		SetContent(content);
 		SetTableNo(tableNo);
 	}
@@ -24,8 +24,8 @@ public:
 		}
 		//throw "Content is null of client notification";
 	}
-	void SetTableNo(const string& tableNo) {
-		if (!tableNo.empty()) {
+	void SetTableNo(const int& tableNo) {
+		if (tableNo>0) {
 			this->tableNo = tableNo;
 		}
 		//throw "No of table is empty";
@@ -33,7 +33,7 @@ public:
 #pragma endregion
 
 #pragma region Getters
-	string GetTableNo()const noexcept {
+	int GetTableNo()const noexcept {
 		return tableNo;
 	}
 	string GetContent()const noexcept {
@@ -244,11 +244,11 @@ ostream& operator<<(ostream& out, Meal& meal) {
 
 class Notification {
 	int quantity;
-	string tableNo;
+	int tableNo;
 public:
 	Stack<Meal>meals;
 	Notification() = default;
-	Notification(const int& quantity, const string& tableNo) {
+	Notification(const int& quantity, const int& tableNo) {
 		SetNotificationQuantity(quantity);
 		SetTableNo(tableNo);
 	}
@@ -260,8 +260,8 @@ public:
 		}
 		//throw "Quantity of notification is null";
 	}
-	void SetTableNo(const string& tableNo) {
-		if (!tableNo.empty()) {
+	void SetTableNo(const int& tableNo) {
+		if (tableNo>0) {
 			this->tableNo = tableNo;
 		}
 		//throw "No of table is empty";
@@ -272,7 +272,7 @@ public:
 	int GetQuantity()const noexcept {
 		return quantity;
 	}
-	string GetTableNo()const noexcept {
+	int GetTableNo()const noexcept {
 		return tableNo;
 	}
 #pragma endregion
@@ -450,18 +450,18 @@ int Kitchen::notificationCount = 0;
 
 class Client {
 	Stack<Kitchen>menu;
-	Stack<Table>table;
+	int table;
 public:
-	string tableNo;
+	int tableNo;
 	Client() = default;
-	Client(const string& tableNo) {
+	Client(const int& tableNo) {
 		SetTableNo(tableNo);
 	}
 	void AddMenu(Kitchen& kitchen) {
 		menu.Push(kitchen);
 	}
-	void SetTableNo(const string& tableNo) {
-		if (!tableNo.empty()) {
+	void SetTableNo(const int& tableNo) {
+		if (tableNo>0) {
 			this->tableNo = tableNo;
 		}
 		//throw "Number of table is empty";
@@ -473,14 +473,7 @@ public:
 		}
 	}
 
-	string GetTableNo()const noexcept {
-		return tableNo;
-	}
-
-	string GetTable() {
-		cout << "Enter table NO : ";
-		string tableNo;
-		getline(cin, tableNo);
+	int GetTableNo()const noexcept {
 		return tableNo;
 	}
 };
@@ -626,7 +619,7 @@ public:
 		cin >> count;
 		Product p(name, price, calory, count);
 		products.push_back(p);
-		//FileHelper::SaveProduct(p);
+		
 	}
 };
 
@@ -639,8 +632,3 @@ void SendNotification(Notification& n1, Kitchen& k) {
 	k.notification.Push(n1);
 	k.notificationCount++;
 }
-
-//void SendAddIngredient(AddIngredientNotification& add, Kitchen& k) {
-//	k.notification.Push(add);
-//	k.notificationCount++;
-//}

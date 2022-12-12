@@ -28,6 +28,7 @@ void main() {
 	Product p7("Cucumber", 0.7, 30, 100);
 	Product p8("Carrot", 1, 41, 100);
 	Product p9("Potato", 1, 76.7, 100);
+	Product p10("Meat", 11, 70, 100);
 
 	Stock stock1;
 	stock1.AddProduct(p);
@@ -40,34 +41,32 @@ void main() {
 	stock1.AddProduct(p7);
 	stock1.AddProduct(p8);
 	stock1.AddProduct(p9);
+	stock1.AddProduct(p10);
 
 	Meal f(20, "Margarita");
-	f.AddProduct(p, 2);
+	f.AddProduct(p, 1);
 	f.AddProduct(p1, 1);
-	f.AddProduct(p2, 3);
+	f.AddProduct(p2, 1);
 	f.AddProduct(p3, 1);
 
 	Meal f1(25, "Sezar");
-	f1.AddProduct(p, 1);
-	f1.AddProduct(p1, 2);
-	f1.AddProduct(p3, 2);
-	f1.AddProduct(p4, 3);
+	f1.AddProduct(p4, 1);
+	f1.AddProduct(p5, 1);
+	f1.AddProduct(p6, 1);
+	
 
 	Meal f2(40, "Capital salad");
-	f2.AddProduct(p4, 4);
-	f2.AddProduct(p5, 3);
-	f2.AddProduct(p6, 2);
 	f2.AddProduct(p7, 1);
-	f2.AddProduct(p8, 3);
-	f2.AddProduct(p9, 2);
+	f2.AddProduct(p8, 1);
+	f2.AddProduct(p9, 1);
+	f2.AddProduct(p10, 1);
 
 	Kitchen k;
 	k.AddMeal(f);
 	k.AddMeal(f1);
 	k.AddMeal(f2);
 
-	Client c("Table 1");
-	c.AddMenu(k);
+	
 	double totaldebt = 0;
 
 	//FileHelper::Save(stock1);
@@ -75,10 +74,10 @@ void main() {
 	Stock stock = FileHelper::Read();
 
 	Meal m;
-
 	Table t;
-
+	Client c;
 	Notification n;
+
 	while (true)
 	{
 		system("cls");
@@ -92,6 +91,10 @@ void main() {
 		int select;
 		cin >> select;
 		if (select == 1) {
+			cout << "T-1 [1]\nT-2 [2]\nT-3 [3]\nT-4 [4]\nT-5 [5]\nEnter table NO : ";
+			int tableNo;
+			cin >> tableNo;
+			Client c(tableNo);
 			GuestPanel(totaldebt, c, k, stock, n, t);
 		}
 		else if (select == 2) {

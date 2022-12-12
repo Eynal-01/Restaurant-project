@@ -25,7 +25,7 @@ void GuestPanel(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification&
 		else if (selectentrance == 2) {
 			Menu(totaldebt, c, k, s, n, t);
 		}
-		else if (selectentrance == 3) {
+		/*else if (selectentrance == 3) {
             cout << "Enter meal name : ";
 			Meal m;
             int num = 1;
@@ -148,6 +148,6 @@ void GuestPanel(double totaldebt, Client& c, Kitchen& k, Stock& s, Notification&
 			}
 			t.notificationcount--;
 			system("pause");
-		}
+		}*/
 	}
 }
