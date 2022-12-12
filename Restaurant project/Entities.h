@@ -297,7 +297,7 @@ ostream& operator<<(ostream& out, Notification& notifications) {
 
 class Table {
 	string message;
-	string name;
+	string tableNo;
 public:
 	static int notificationcount;
 	Stack<ClientNotification>clientnotification;
@@ -314,11 +314,7 @@ public:
 	void SetCount(const int& notificationcount) {
 		this->notificationcount = notificationcount;
 	}
-	void SetName(const string& name) {
-		this->name = name;
-	}
 #pragma endregion
-
 #pragma region Getters
 	string GetMessage() const {
 		return message;
@@ -326,9 +322,7 @@ public:
 	int GetNotificationCount()const {
 		return notificationcount;
 	}
-	string GetName()const {
-		return name;
-	}
+	
 #pragma endregion
 
 	void AddNotification(const Notification& notification) {

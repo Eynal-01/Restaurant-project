@@ -82,9 +82,13 @@ void main() {
 	while (true)
 	{
 		system("cls");
-		cout << "\t\t\t\t\t\t\t\tCLIENT [1]" << endl;
-		cout << "\t\t\t\t\t\t\t\tADMIN  [2]" << endl;
-		cout << "\t\t\t\t\t\t\t\tEnter select : ";
+		RestaurantName();
+		cout << endl << endl;
+		RestaurantWord();
+		cout << endl << endl;
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tCLIENT [1]" << endl;
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tADMIN  [2]" << endl;
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tEnter select : ";
 		int select;
 		cin >> select;
 		if (select == 1) {
