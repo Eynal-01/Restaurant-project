@@ -75,8 +75,4 @@ public:
 		assert(index >= 0 && index <= size && "Invalid Index");
 		return data[index];
 	}
-	~Stack()
-	{
-		//delete[]data;
-	}
 };

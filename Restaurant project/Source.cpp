@@ -22,13 +22,34 @@ void main() {
 	Product p1("Olive", 0.5, 115, 100);
 	Product p2("Mashroom", 0.8, 22, 100);
 	Product p3("Flour", 1, 364, 100);
+	Meal f(20, "Margarita");
+	f.AddProduct(p );
+	f.AddProduct(p1 );
+	f.AddProduct(p2 );
+	f.AddProduct(p3 );
+
 	Product p4("Fillet", 2, 239, 100);
 	Product p5("Mayonnaise", 2.5, 679.7, 100);
 	Product p6("Beans", 1, 347, 100);
+	Meal f1(25, "Sezar");
+	f1.AddProduct(p4 );
+	f1.AddProduct(p5 );
+	f1.AddProduct(p6);
+	
 	Product p7("Cucumber", 0.7, 30, 100);
 	Product p8("Carrot", 1, 41, 100);
 	Product p9("Potato", 1, 76.7, 100);
 	Product p10("Meat", 11, 70, 100);
+	Meal f2(40, "Capital salad");
+	f2.AddProduct(p7);
+	f2.AddProduct(p8);
+	f2.AddProduct(p9);
+	f2.AddProduct(p10);
+
+	Kitchen k;
+	k.AddMeal(f);
+	k.AddMeal(f1);
+	k.AddMeal(f2);
 
 	Stock stock1;
 	stock1.AddProduct(p);
@@ -42,30 +63,6 @@ void main() {
 	stock1.AddProduct(p8);
 	stock1.AddProduct(p9);
 	stock1.AddProduct(p10);
-
-	Meal f(20, "Margarita");
-	f.AddProduct(p, 1);
-	f.AddProduct(p1, 1);
-	f.AddProduct(p2, 1);
-	f.AddProduct(p3, 1);
-
-	Meal f1(25, "Sezar");
-	f1.AddProduct(p4, 1);
-	f1.AddProduct(p5, 1);
-	f1.AddProduct(p6, 1);
-	
-
-	Meal f2(40, "Capital salad");
-	f2.AddProduct(p7, 1);
-	f2.AddProduct(p8, 1);
-	f2.AddProduct(p9, 1);
-	f2.AddProduct(p10, 1);
-
-	Kitchen k;
-	k.AddMeal(f);
-	k.AddMeal(f1);
-	k.AddMeal(f2);
-
 	
 	double totaldebt = 0;
 
@@ -85,16 +82,24 @@ void main() {
 		cout << endl << endl;
 		RestaurantWord();
 		cout << endl << endl;
-		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tCLIENT [1]" << endl;
-		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tADMIN  [2]" << endl;
+		mysetcolor(11, 0);
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\t CLIENT [1]" << endl;
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\t ADMIN  [2]" << endl;
 		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tEnter select : ";
+		mysetcolor(7, 0);
 		int select;
 		cin >> select;
 		if (select == 1) {
-			cout << "T-1 [1]\nT-2 [2]\nT-3 [3]\nT-4 [4]\nT-5 [5]\nEnter table NO : ";
+			system("cls");
+			WelcomeWord();
+			cout << endl << endl;
+			mysetcolor(11, 0);
+			cout << "\t\t\t\t\t\t\t\t\t\t\t\t\t TABLE 1 [1]\n\t\t\t\t\t\t\t\t\t\t\t\t\t TABLE 2 [2]\n\t\t\t\t\t\t\t\t\t\t\t\t\t TABLE 3 [3]\n\t\t\t\t\t\t\t\t\t\t\t\t\t TABLE 4 [4]\n\t\t\t\t\t\t\t\t\t\t\t\t\t TABLE 5 [5]\n\t\t\t\t\t\t\t\t\t\t\t\t\t Enter table NO : ";
+			mysetcolor(7, 0);
 			int tableNo;
 			cin >> tableNo;
 			Client c(tableNo);
+			c.AddMenu(k);
 			GuestPanel(totaldebt, c, k, stock, n, t);
 		}
 		else if (select == 2) {
@@ -104,11 +109,12 @@ void main() {
 				cin.ignore();
 				cin.clear();
 				system("cls");
-				cout << "\t\t\t\t\t\t\t\tEnter username : ";
+				mysetcolor(11, 0);
+				cout << "\t\t\t\t\t\t\t\t\t\t\t\t\t    Enter username : ";
 				string username;
 				getline(cin, username);
 				system("cls");
-				cout << "\t\t\t\t\t\t\t\tEnter Password: ";
+				cout << "\t\t\t\t\t\t\t\t\t\t\t\t\t    Enter Password: ";
 				string password, P;
 				char p;
 				p = _getch();
@@ -128,7 +134,7 @@ void main() {
 					p = _getch();
 					if (p != 13) {
 						system("cls");
-						cout << "\t\t\t\t\t\t\t\tEnter Password: ";
+						cout << "\t\t\t\t\t\t\t\t\t\t\t\t\t    Enter Password: ";
 					}
 				}
 				cout << endl;
@@ -138,16 +144,22 @@ void main() {
 						break;
 					}
 					else {
-						cout << "\t\t\t\t\t\t\t\tWrong password!" << endl;
+						mysetcolor(4, 0);
+						cout << "\t\t\t\t\t\t\t\t\t\t\t\t\t    Wrong password!" << endl;
+						mysetcolor(7, 0);
 					}
 				}
 				else {
-					cout << "\t\t\t\t\t\t\t\tWrong username!" << endl;
+					mysetcolor(4, 0);
+					cout << "\t\t\t\t\t\t\t\t\t\t\t\t\t    Wrong username!" << endl;
+					mysetcolor(7, 0);
 				}
 			}
 		}
 		else {
+			mysetcolor(4, 0);
 			cout << "\t\t\t\t\t\t\t\tYour select is incorrect!!!\n\t\t\t\t\t\t\t\tPlease enter retry" << endl;
+			mysetcolor(7, 0);
 		}
 		system("pause");
 	}

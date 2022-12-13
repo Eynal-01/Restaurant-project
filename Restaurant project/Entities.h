@@ -4,7 +4,9 @@
 #include<string>
 #include<list>
 #include<vector>
+#include <Windows.h>
 #include"Stack.h"
+#include"FrontEnd.h"
 using namespace std;
 
 class ClientNotification {
@@ -19,16 +21,13 @@ public:
 
 #pragma region Setters
 	void SetContent(const string& content) {
-		if (!content.empty()) {
-			this->content = content;
-		}
-		//throw "Content is null of client notification";
+		if (!content.empty() && "Content of notification must not be null");
+		this->content = content;
 	}
 	void SetTableNo(const int& tableNo) {
-		if (tableNo>0) {
-			this->tableNo = tableNo;
-		}
-		//throw "No of table is empty";
+		assert(tableNo >= 0 && "Table no must not be less than 0");
+		this->tableNo = tableNo;
+
 	}
 #pragma endregion
 
@@ -170,10 +169,8 @@ public:
 	Product* GetProductByID(int id) {
 		for (size_t i = 0; i < products.GetSize(); i++)
 		{
-			if (products[i].GetID() == id) {
-				return &products[i];
-			}
-			//throw "This ingredient is unavailable";
+			assert(products[i].GetID() == id && "ID of product is incorrect");
+			return &products[i];
 		}
 	}
 
@@ -217,11 +214,8 @@ public:
 		}
 	}
 
-	void AddProduct(Product& product, const int& productcount) {
-		for (size_t i = 0; i < productcount; i++)
-		{
-			products.Push(product);
-		}
+	void AddProduct(Product& product) {
+		products.Push(product);
 	}
 	void ShowIngredients() {
 		products.Show();
@@ -255,16 +249,12 @@ public:
 #pragma region Setters
 
 	void SetNotificationQuantity(const int& quantity) {
-		if (quantity > 0) {
-			this->quantity = quantity;
-		}
-		//throw "Quantity of notification is null";
+		assert(quantity > 0 && "Count of notification must be not negative number");
+		this->quantity = quantity;
 	}
 	void SetTableNo(const int& tableNo) {
-		if (tableNo>0) {
-			this->tableNo = tableNo;
-		}
-		//throw "No of table is empty";
+		assert(tableNo > 0 && "Table no must not be incorrect");
+		this->tableNo = tableNo;
 	}
 #pragma endregion
 
@@ -322,7 +312,7 @@ public:
 	int GetNotificationCount()const {
 		return notificationcount;
 	}
-	
+
 #pragma endregion
 
 	void AddNotification(const Notification& notification) {
@@ -357,10 +347,12 @@ public:
 	}
 
 	void ShowNameOfMeals() {
+		mysetcolor(6, 0);
 		for (size_t i = 0; i < meals.GetSize(); i++)
 		{
-			cout << "\t\t\t\t\t\t\t\t" << meals[i].GetID() << " " << meals[i].GetName() << " - " << meals[i].GetPrice() << " $ " << endl;
+			cout << "\t\t\t\t\t\t\t\t\t\t\t\t\t" << meals[i].GetID() << " " << meals[i].GetName() << " - " << meals[i].GetPrice() << " $ " << endl;
 		}
+		mysetcolor(7, 0);
 	}
 
 	void Show()const {
@@ -371,7 +363,9 @@ public:
 		for (size_t i = 0; i < meals.GetSize(); i++)
 		{
 			if (meals[i].GetID() == id) {
+				mysetcolor(6, 0);
 				cout << meals[i];
+				mysetcolor(7, 0);
 			}
 		}
 	}
@@ -390,27 +384,42 @@ public:
 	}
 
 	void AddMeal() {
-		cout << "Enter name of meal : ";
-		string namemeal;
-		getline(cin, namemeal);
-		cout << "Enter price of meal : ";
+		cin.ignore();
+		cin.clear();
+		mysetcolor(11, 0);
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tEnter name : ";
+		string name;
+		getline(cin, name);
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tEnter price : ";
 		double price;
 		cin >> price;
-		cout << "Enter ingredients count : ";
+		cout << endl;
+		Meal newMeal(price, name);
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tPRODUCT COUNT : ";
 		int count;
 		cin >> count;
-		for (size_t i = 0; i < count; i++)
+		for (size_t i = 1; i <= count; i++)
 		{
-			cout << "Enter name of ingredient : ";
-			string ingname;
-			getline(cin, ingname);
-			cout << "Enter price of ingredient : ";
-			double ingprice;
-			cin >> ingprice;
-			cout << "Enter calories of ingredient : ";
-			double caloriesing;
-			cin >> caloriesing;
+			cin.ignore();
+			cin.clear();
+			cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tEnter " << i << " product name : ";
+			string pName;
+			getline(cin, pName);
+			cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tEnter " << i << " product price : ";
+			double price;
+			cin >> price;
+			cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tEnter " << i << " product calories : ";
+			double calories;
+			cin >> calories;
+			cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tEnter " << i << " product count : ";
+			int count;
+			cin >> count;
+			Product p(name, price, calories, count);
+			newMeal.AddProduct(p);
+			mysetcolor(7, 0);
 		}
+		meals.Push(newMeal);
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tMeal added successfully" << endl;
 	}
 
 	int GetMealsCount() {
@@ -419,22 +428,22 @@ public:
 
 	void UpdateMeal(int id) {
 		auto meal = GetMealById(id);
-		cout << "Name [1]" << endl;
-		cout << "Price [2]" << endl;
-		cout << "Irigredients [3]" << endl;
-		cout << "Enter your select : ";
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tName [1]" << endl;
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tPrice [2]" << endl;
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tIrigredients [3]" << endl;
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tEnter your select : ";
 		int select;
 		cin >> select;
 		if (select == 1) {
 			cin.ignore();
 			cin.clear();
-			cout << "Enter new name of meal : ";
+			cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tEnter new name of meal : ";
 			string newname;
 			getline(cin, newname);
 			meal->SetName(newname);
 		}
 		else if (select == 2) {
-			cout << "Enter new price of meal : ";
+			cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tEnter new price of meal : ";
 			double newprice;
 			cin >> newprice;
 			meal->SetPrice(newprice);
@@ -452,7 +461,7 @@ class Client {
 	Stack<Kitchen>menu;
 	int table;
 public:
-	int tableNo;
+	static int tableNo;
 	Client() = default;
 	Client(const int& tableNo) {
 		SetTableNo(tableNo);
@@ -461,10 +470,8 @@ public:
 		menu.Push(kitchen);
 	}
 	void SetTableNo(const int& tableNo) {
-		if (tableNo>0) {
-			this->tableNo = tableNo;
-		}
-		//throw "Number of table is empty";
+		assert(tableNo >= 0 && "Table must not be incorrect");
+		this->tableNo = tableNo;
 	}
 	void ShowMenu() {
 		for (size_t i = 0; i < menu.GetSize(); i++)
@@ -478,6 +485,8 @@ public:
 	}
 };
 
+int Client::tableNo = 0;
+
 class Stock {
 public:
 	vector<Product>products;
@@ -487,13 +496,11 @@ public:
 		products.push_back(product);
 	}
 
-	Product* GetProductByID(int index = -1) {
+	Product* GetProductByID(int index = 0) {
 		for (size_t i = 0; i < products.size(); i++)
 		{
-			if (products[i].GetID() == index) {
-				return &products[i];
-			}
-			//throw "This ingredient is unavailable";
+			assert(products[i].GetID() == index && "This product is unavailable");
+			return &products[i];
 		}
 	}
 
@@ -514,8 +521,10 @@ public:
 			return true;
 		}
 		else {
+			mysetcolor(4, 0);
 			cout << "This count very high" << endl;
 			cout << "Press any keyy and back to client menu" << endl;
+			mysetcolor(7, 0);
 			system("pause");
 			return false;
 		}
@@ -533,27 +542,29 @@ public:
 	void ShowProduct() {
 		for (size_t i = 0; i < products.size(); i++)
 		{
-			cout << "\t\t\t\t\t\t\t\t\tID : " << products[i].GetID() << "\n\t\t\t\t\t\t\t\t\tName of product : " << products[i].GetName() <<
-				"\n\t\t\t\t\t\t\t\t\tCount of product : " << products[i].GetProductCount() << endl
-				<< "\t\t\t\t\t\t\t\t\tPrice of product : " << products[i].GetPrice() << endl << endl;
+			cout << "\t\t\t\t\t\t\t\t\t\t\t\t\t\tID : " << products[i].GetID() << "\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tName of product : " << products[i].GetName() <<
+				"\n\t\t\t\t\t\t\t\t\t\t\t\t\t\tCount of product : " << products[i].GetProductCount() << endl
+				<< "\t\t\t\t\t\t\t\t\t\t\t\t\t\tPrice of product : " << products[i].GetPrice() << endl << endl;
 		}
 	}
 
 	void ShowProductsToClient() {
 		for (size_t i = 0; i < products.size(); i++)
 		{
+			mysetcolor(6, 0);
 			cout << "ID : " << products[i].GetID() << "\nName of ingredient : " << products[i].GetName() <<
 				"\nCalories of ingredient : " << products[i].GetCalories() << endl << endl;
+			mysetcolor(7, 0);
 		}
 	}
 
 	void UpdateIngredient() {
 		ShowProduct();
-		cout << "Name     [1]" << endl;
-		cout << "Price    [2]" << endl;
-		cout << "Calories [3]" << endl;
-		cout << "Count    [4]" << endl;
-		cout << "Which feature you want to update : ";
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tName     [1]" << endl;
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tPrice    [2]" << endl;
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tCalories [3]" << endl;
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tCount    [4]" << endl;
+		cout << "\t\t\t\t\t\t\t\t\t\t\t\t\tWhich feature you want to update : ";
 		int feature;
 		cin >> feature;
 		if (feature == 1) {
@@ -562,7 +573,7 @@ public:
 			cin >> num;
 			Product* p = GetProductByID(num);
 			system("cls");
-			cout << p << endl;
+			cout << *p << endl;
 			cin.clear();
 			cin.ignore();
 			cout << "Enter new name of ingredient : ";
@@ -619,7 +630,7 @@ public:
 		cin >> count;
 		Product p(name, price, calory, count);
 		products.push_back(p);
-		
+
 	}
 };
 
